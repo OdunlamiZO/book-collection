@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/main.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+  <script src="js/main.js"></script>
+</head>
+
+<body>
+  <div id="page" style="font-family: 'Ubuntu Condensed', sans-serif;">
+    <form id="search-form" style="--border-width: 1px;">
+      <div id="banner" style="font-family: 'Oxygen', sans-serif;">
+        Book<span style="padding-left: 5px; font-family: 'Ubuntu Condensed', sans-serif; font-size: 0.3em;">collection</span>
+      </div>
+      <div class="c1" style="flex: 1;">
+        <input type="text" name="search-input" id="search-input" autocomplete="off">
+      </div>
+      <div class="c1" style="position: relative; max-width: 100px; width: 22%; letter-spacing: 1px;">
+        <div id="search-by-dropdown-btn" style="display: flex; align-items: center; justify-content: space-between; width: 100%; height: 100%; cursor: pointer;">
+          <span id="search-by" style="padding-left: 5px;">Title</span>
+          <svg id="Layer_1" style="enable-background:new 0 0 64 64;" version="1.1" viewBox="0 0 64 64" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><style type="text/css">
+	.st0{fill:#134563;}
+</style><g><g id="Icon-Chevron-Left" transform="translate(237.000000, 335.000000)"><polyline class="st0" id="Fill-35" points="-218.7,-308.6 -216.7,-310.6 -205,-298.8 -193.3,-310.6 -191.3,-308.6 -205,-294.9      -218.7,-308.6    "/></g></g></svg>
+        </div>
+        <div id="search-by-menu" class="hidden">
+          <div class="triangle"></div>
+          <span class="menu-item">Title</span>
+          <span class="menu-item">Author</span>
+        </div>
+      </div>
+      <div class="c1" style="max-width: 65px; width: 14%;">
+        <div id="search-btn" style="display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; cursor: pointer;">
+          <svg height="512" viewBox="0 0 512 512" width="512"><title/><path d="M221.09,64A157.09,157.09,0,1,0,378.18,221.09,157.1,157.1,0,0,0,221.09,64Z" style="fill:none;stroke:#000;stroke-miterlimit:10;stroke-width:32px"/><line style="fill:none;stroke:#000;stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px" x1="338.29" x2="448" y1="338.29" y2="448"/></svg>
+        </div>
+      </div>
+      <div id="result-container" class="hidden">
+        
+      </div>
+    </form>
+  </div>
+</body>
+
+</html>
