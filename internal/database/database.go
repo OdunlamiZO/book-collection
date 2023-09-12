@@ -42,7 +42,7 @@ func GetBooksByAuthor(author string) ([]model.Book, error) {
 }
 
 func AddBook(book *model.Book) error {
-	var query string = "INSERT INTO books (title, url, author, co_authors) VALUES ($1, $2, $3, $4::varchar[]) RETURNING id"
+	var query string = "INSERT INTO books (title, url, author, co_authors) VALUES ($1, $2, $3, $4::varchar[]) ON CONFLICT (title, author, co_authors) DO NOTHING RETURNING id"
 	if err := db.QueryRow(query, book.Title, book.Url, book.Author, util.ArrayToString(book.CoAuthors)).Scan(&book.Id); err != nil {
 		return err
 	}
