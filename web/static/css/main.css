@@ -76,14 +76,15 @@ a {
 #search-by-menu {
   z-index: 1;
   position: absolute;
-  top: 115%;
+  top: 105%;
   right: -10%;
   width: 150%;
+  border: 1px solid gray;
+  border-top: unset;
   border-radius: 4px;
   padding-top: 8px;
   padding-bottom: 8px;
   background-color: white;
-  box-shadow: 8px 8px 8px rgba(150, 150, 150, 0.1);
 }
 
 #search-by-menu .menu-item {
@@ -97,18 +98,6 @@ a {
 
 #search-by-menu .menu-item:hover {
   background-color: rgba(150, 150, 150, 0.3);
-}
-
-#search-by-menu .triangle {
-  z-index: 1px;
-  position: absolute;
-  top: -12px;
-  right: 10%;
-  width: 0px;
-  height: 0px;
-  border-left: 12px solid transparent;
-  border-right: 12px solid transparent;
-  border-bottom: 12px solid white;
 }
 
 #result-container {
