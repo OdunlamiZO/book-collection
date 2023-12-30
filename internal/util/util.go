@@ -15,10 +15,14 @@ func ArrayToString(array []string) string {
 }
 
 func StringToArray(str string) []string {
-	quotedArray := strings.Split(strings.Trim(str, "{}"), ", ")
-	array := make([]string, len(quotedArray))
-	for index, item := range quotedArray {
-		array[index] = strings.Trim(item, `"`)
+	str = strings.Trim(str, "{}")
+	if str != "" {
+		quotedArray := strings.Split(str, ", ")
+		array := make([]string, len(quotedArray))
+		for index, item := range quotedArray {
+			array[index] = strings.Trim(item, `"`)
+		}
+		return array
 	}
-	return array
+	return []string{}
 }
