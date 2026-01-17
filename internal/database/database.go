@@ -8,14 +8,14 @@ import (
 	"odunlamizo/book-collection/internal/model"
 	"odunlamizo/book-collection/internal/util"
 
-	_ "github.com/jackc/pgx/v5/stdlib"
+	"github.com/lib/pq"
 )
 
 var db *sql.DB
 
 func Initialize() error {
 	var err error
-	if db, err = sql.Open("pgx", os.Getenv("DATABASE_URL")); err != nil {
+	if db, err = sql.Open("postgres", os.Getenv("DATABASE_URL")); err != nil {
 		return err
 	}
 	return nil
@@ -58,12 +58,14 @@ func DeleteBookById(id int) (*model.Book, error) {
 		return nil, err
 	}
 	var query string = "DELETE FROM books WHERE id = $1 RETURNING *"
-	if err := txn.QueryRow(query, id).Scan(&book.Id, &book.Title, &book.Url, &book.Author, &book.CoAuthors); err != nil {
+	var pqCoAuthors pq.StringArray
+	if err := txn.QueryRow(query, id).Scan(&book.Id, &book.Title, &book.Url, &book.Author, &pqCoAuthors); err != nil {
 		return nil, err
 	}
 	if err := txn.Commit(); err != nil {
 		return nil, err
 	}
+	book.CoAuthors = []string(pqCoAuthors)
 	return &book, nil
 }
 
@@ -71,9 +73,11 @@ func extractBooks(rows *sql.Rows) ([]model.Book, error) {
 	var books []model.Book
 	for rows.Next() {
 		var book model.Book
-		if err := rows.Scan(&book.Id, &book.Title, &book.Url, &book.Author, &book.CoAuthors); err != nil {
+		var pqCoAuthors pq.StringArray
+		if err := rows.Scan(&book.Id, &book.Title, &book.Url, &book.Author, &pqCoAuthors); err != nil {
 			return nil, err
 		}
+		book.CoAuthors = []string(pqCoAuthors)
 		books = append(books, book)
 	}
 	if err := rows.Err(); err != nil {
