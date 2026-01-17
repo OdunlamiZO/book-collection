@@ -73,7 +73,7 @@ $(function () {
         		`;
 		}
 		$.ajax({
-			url: "https://book-collection.fly.dev/graphql",
+			url: "https://book-collection-bssz.onrender.com/graphql",
 			type: "POST",
 			timeout: 15000, // 15 seconds timeout
 			contentType: "application/json",
