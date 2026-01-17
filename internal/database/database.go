@@ -56,14 +56,12 @@ func DeleteBookById(id int) (*model.Book, error) {
 		return nil, err
 	}
 	var query string = "DELETE FROM books WHERE id = $1 RETURNING *"
-	var coAuthorsString string
-	if err := txn.QueryRow(query, id).Scan(&book.Id, &book.Title, &book.Url, &book.Author, &coAuthorsString); err != nil {
+	if err := txn.QueryRow(query, id).Scan(&book.Id, &book.Title, &book.Url, &book.Author, &book.CoAuthors); err != nil {
 		return nil, err
 	}
 	if err := txn.Commit(); err != nil {
 		return nil, err
 	}
-	book.CoAuthors = util.StringToArray(coAuthorsString)
 	return &book, nil
 }
 
@@ -71,11 +69,9 @@ func extractBooks(rows *sql.Rows) ([]model.Book, error) {
 	var books []model.Book
 	for rows.Next() {
 		var book model.Book
-		var coAuthorsString string
-		if err := rows.Scan(&book.Id, &book.Title, &book.Url, &book.Author, &coAuthorsString); err != nil {
+		if err := rows.Scan(&book.Id, &book.Title, &book.Url, &book.Author, &book.CoAuthors); err != nil {
 			return nil, err
 		}
-		book.CoAuthors = util.StringToArray(coAuthorsString)
 		books = append(books, book)
 	}
 	if err := rows.Err(); err != nil {

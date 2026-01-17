@@ -13,16 +13,3 @@ func ArrayToString(array []string) string {
 	quotedString := fmt.Sprintf("{%s}", strings.Join(quotedArray, ", "))
 	return quotedString
 }
-
-func StringToArray(str string) []string {
-	str = strings.Trim(str, "{}")
-	if str != "" {
-		quotedArray := strings.Split(str, ", ")
-		array := make([]string, len(quotedArray))
-		for index, item := range quotedArray {
-			array[index] = strings.Trim(item, `"`)
-		}
-		return array
-	}
-	return []string{}
-}
