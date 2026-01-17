@@ -3,7 +3,6 @@ package database
 import (
 	"database/sql"
 	"os"
-	"strings"
 
 	"odunlamizo/book-collection/internal/model"
 	"odunlamizo/book-collection/internal/util"
@@ -22,8 +21,8 @@ func Initialize() error {
 }
 
 func GetBooksByTitle(title string) ([]model.Book, error) {
-	var query string = "SELECT * FROM books WHERE lower(title) = $1"
-	rows, err := db.Query(query, strings.ToLower(title))
+	var query string = "SELECT * FROM books WHERE title ILIKE $1"
+	rows, err := db.Query(query, "%"+title+"%")
 	if err != nil {
 		return nil, err
 	}
@@ -32,10 +31,10 @@ func GetBooksByTitle(title string) ([]model.Book, error) {
 }
 
 func GetBooksByAuthor(author string) ([]model.Book, error) {
-	var query string = `SELECT * FROM books WHERE lower(author) = $1 OR EXISTS (
-		SELECT 1 FROM unnest(co_authors) AS ca WHERE lower(ca) = $1
+	var query string = `SELECT * FROM books WHERE author ILIKE $1 OR EXISTS (
+		SELECT 1 FROM unnest(co_authors) AS ca WHERE ca ILIKE $1
 	)`
-	rows, err := db.Query(query, strings.ToLower(author))
+	rows, err := db.Query(query, "%"+author+"%")
 	if err != nil {
 		return nil, err
 	}
