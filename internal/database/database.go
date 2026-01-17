@@ -32,8 +32,10 @@ func GetBooksByTitle(title string) ([]model.Book, error) {
 }
 
 func GetBooksByAuthor(author string) ([]model.Book, error) {
-	var query string = "SELECT * FROM books WHERE lower(author) = $1 OR $2::varchar[] <@ lower(co_authors::varchar)::varchar[]"
-	rows, err := db.Query(query, strings.ToLower(author), util.ArrayToString([]string{strings.ToLower(author)}))
+	var query string = `SELECT * FROM books WHERE lower(author) = $1 OR EXISTS (
+		SELECT 1 FROM unnest(co_authors) AS ca WHERE lower(ca) = $1
+	)`
+	rows, err := db.Query(query, strings.ToLower(author))
 	if err != nil {
 		return nil, err
 	}
